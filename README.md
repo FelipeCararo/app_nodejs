@@ -10,4 +10,4 @@
 - docker exec -it app bash
 - yarn test
 
-Made with 💜 by Felipe Cararo
+Made with 💜 by Felipe Cararo 👋
