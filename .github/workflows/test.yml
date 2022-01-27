@@ -6,7 +6,7 @@ name: CI Tests
 on:
   push:
     paths:
-      - "./node/**.js"
+      - "node/**"
   pull_request:
 
 jobs:
