@@ -6,7 +6,8 @@ name: CI Tests
 on:
   push:
     paths:
-      - "node/src/**"
+      - "./node"
+  pull_request:
 
 jobs:
   test-ci:
