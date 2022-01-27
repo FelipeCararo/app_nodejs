@@ -6,7 +6,7 @@ name: CI Tests
 on:
   push:
     paths:
-      - "node/**"
+      - "node/src/**"
 
 jobs:
   test-ci:
