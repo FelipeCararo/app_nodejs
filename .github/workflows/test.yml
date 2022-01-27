@@ -5,6 +5,8 @@ name: CI Tests
 
 on:
   push:
+    paths:
+      - "node/**"
   pull_request:
 
 jobs:
