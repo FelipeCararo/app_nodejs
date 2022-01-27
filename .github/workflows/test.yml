@@ -30,6 +30,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the stack
-        run: docker-compose up -d
+        run: docker-compose up --build
       - name: Test docker-compose
         run: docker run --network container:app appropriate/curl -s --retry 10 --retry-connrefused http://app:3000/
