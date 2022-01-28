@@ -32,12 +32,14 @@ jobs:
 
   test-docker-compose:
     runs-on: ubuntu-20.04
-    environment:
-      name: DEV
+    environment: dev
     steps:
       - uses: actions/checkout@v2
       - name: Build the stack
-        with:
+        run: docker-compose up -d
+      - name: Test
+        run: docker run --network container:app appropriate/curl -s --retry 10 --retry-connrefused http://app:3000/
+        env:
           APP_SECRET: ${{ secrets.APP_SECRET }}
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_NAME: ${{ secrets.DB_NAME }}
@@ -45,8 +47,3 @@ jobs:
           DB_PORT: ${{ secrets.DB_PORT }}
           DB_USER: ${{ secrets.DB_USER }}
           PORT: ${{ secrets.PORT }}
-          package: "${{ github.workspace }}//app_nodejs"
-          slot-name: "dev"
-        run: docker-compose up -d
-      - name: Test
-        run: docker run --network container:app appropriate/curl -s --retry 10 --retry-connrefused http://app:3000/
