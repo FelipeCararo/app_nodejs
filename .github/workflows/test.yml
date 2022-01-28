@@ -26,7 +26,7 @@ jobs:
       - run: yarn test
       - name: Print secret test
         run: |
-          if [ "$DB_HOST" == "postgres" ]
+          if [ "$SECRET_DEV_TESTE" == "testando" ]
           then
             echo "Secret Ok"
           fi
@@ -34,7 +34,7 @@ jobs:
           CI: true
           APP_SECRET: ${{ secrets.APP_SECRET }}
           DB_DIALECT: ${{ secrets.DB_DIALECT }}
-          DB_HOST: ${{ secrets.dev.DB_HOST }}
+          SECRET_DEV_TESTE: ${{ secrets.dev.SECRET_DEV_TESTE }}
   test-docker-compose:
     runs-on: ubuntu-20.04
 
