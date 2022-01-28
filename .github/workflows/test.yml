@@ -32,7 +32,9 @@ jobs:
 
   test-docker-compose:
     runs-on: ubuntu-20.04
-    environment: DEV
+    environment:
+      name: DEV
+      url: https://github.com
 
     steps:
       - uses: actions/checkout@v2
