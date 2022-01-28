@@ -24,15 +24,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn
       - run: yarn test
-      - name: Print secret test
-        run: |
-          if [ "$TESTE_SECRET" == "teste_secret" ]
-          then
-            echo "Ok"
-          fi
         env:
           CI: true
-          TESTE_SECRET: ${{ secrets.TESTE_SECRET }}
+          DB_DIALECT: ${{ secrets.DB_DIALECT }}
   test-docker-compose:
     runs-on: ubuntu-20.04
 
