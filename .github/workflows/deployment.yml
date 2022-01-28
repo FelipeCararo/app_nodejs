@@ -1,0 +1,86 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, develop]
+
+jobs:
+  test-ci:
+    runs-on: ubuntu-20.04
+
+    defaults:
+      run:
+        working-directory: ./node
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn
+      - run: yarn test
+
+  deploy-test:
+    needs: test-ci
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: ./node
+    concurrency: deploy-to-test
+    environment: dev
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create env file
+        run: |
+          touch .env
+          echo APP_SECRET =${{ secrets.APP_SECRET }} >> .env
+          echo DB_HOST =${{ secrets.DB_HOST }} >> .env
+          echo DB_NAME =${{ secrets.DB_NAME }} >> .env
+          echo DB_PASS =${{ secrets.DB_PASS }} >> .env
+          echo DB_PORT =${{ secrets.DB_PORT }} >> .env
+          echo DB_USER =${{ secrets.DB_USER }} >> .env
+          echo PORT =${{ secrets.PORT }} >> .env
+      - name: Print secret test
+        run: |
+          if [ "${{ secrets.SECRET_DEV_TESTE }}" == "testando" ]
+          then
+            echo "Secret Ok"
+          fi
+      - name: Build the stack
+        run: docker-compose up -d
+      - name: Test
+        run: docker run --network container:app appropriate/curl -s --retry 10 --retry-connrefused http://app:3000/
+      - run: echo "Deploy"
+
+  deploy-production:
+    needs: test-ci
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: ./node
+    concurrency: deploy-to-prod
+    environment: prod
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create env file
+        run: |
+          touch .env
+          echo APP_SECRET =${{ secrets.APP_SECRET }} >> .env
+          echo DB_HOST =${{ secrets.DB_HOST }} >> .env
+          echo DB_NAME =${{ secrets.DB_NAME }} >> .env
+          echo DB_PASS =${{ secrets.DB_PASS }} >> .env
+          echo DB_PORT =${{ secrets.DB_PORT }} >> .env
+          echo DB_USER =${{ secrets.DB_USER }} >> .env
+          echo PORT =${{ secrets.PORT }} >> .env
+      - name: Build the stack
+        run: docker-compose up -d
+        run: docker run --network container:app appropriate/curl -s --retry 10 --retry-connrefused http://app:3000/
+      - run: echo "Deploy"
