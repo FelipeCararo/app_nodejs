@@ -24,10 +24,17 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn
       - run: yarn test
+      - name: Print secret test
+        run: |
+          if [ "$DB_HOST" == "postgres" ]
+          then
+            echo "Secret Ok"
+          fi
         env:
           CI: true
           APP_SECRET: ${{ secrets.APP_SECRET }}
           DB_DIALECT: ${{ secrets.DB_DIALECT }}
+          DB_HOST: ${{ secrets.dev.DB_HOST }}
   test-docker-compose:
     runs-on: ubuntu-20.04
 
