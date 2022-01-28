@@ -51,7 +51,7 @@ jobs:
           echo DB_USER =${{ secrets.DB_USER }} >> .env
           echo PORT =${{ secrets.PORT }} >> .env
 
-          if [ "$SECRET_DEV_TESTE" == "testando" ]
+          if [ ${{ secrets.SECRET_DEV_TESTE }} == "testando"]
           then
             echo "Ok"
           fi
