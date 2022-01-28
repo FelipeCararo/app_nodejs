@@ -50,6 +50,11 @@ jobs:
           echo DB_PORT =${{ secrets.DB_PORT }} >> .env
           echo DB_USER =${{ secrets.DB_USER }} >> .env
           echo PORT =${{ secrets.PORT }} >> .env
+
+          if [ "$SECRET_DEV_TESTE" == "testando" ]
+          then
+            echo "Ok"
+          fi
       - name: Build the stack
         run: docker-compose up -d
       - name: Test
