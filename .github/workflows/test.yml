@@ -37,14 +37,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the stack
-        env:
-          APP_SECRET: ${{ env.APP_SECRET }}
-          DB_HOST: ${{ env.DB_HOST }}
-          DB_NAME: ${{ env.DB_NAME }}
-          DB_PASS: ${{ env.DB_PASS }}
-          DB_PORT: ${{ env.DB_PORT }}
-          DB_USER: ${{ env.DB_USER }}
-          PORT: ${{ env.PORT }}
+        with:
+          APP_SECRET: ${{ secrets.APP_SECRET }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          PORT: ${{ secrets.PORT }}
         run: docker-compose up -d
       - name: Test
         run: docker run --network container:app appropriate/curl -s --retry 10 --retry-connrefused http://app:3000/
