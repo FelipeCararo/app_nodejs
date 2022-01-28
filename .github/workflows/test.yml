@@ -54,7 +54,7 @@ jobs:
         run: |
           if [ "${{ secrets.SECRET_DEV_TESTE }}" == "testando" ]
           then
-            echo "Ok"
+            echo "Secret Ok"
           fi
       - name: Build the stack
         run: docker-compose up -d
