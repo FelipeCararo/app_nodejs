@@ -82,5 +82,6 @@ jobs:
           echo PORT =${{ secrets.PORT }} >> .env
       - name: Build the stack
         run: docker-compose up -d
+      - name: Deploy run
         run: docker run --network container:app appropriate/curl -s --retry 10 --retry-connrefused http://app:3000/
       - run: echo "Deploy"
