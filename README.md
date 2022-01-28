@@ -1,6 +1,6 @@
 <p align="center">App implementing TDD, docker-compose, JWT authentication and Github Actions</p>
 
-# Essentials requisites to perform local testing
+# Local testing requirements
 
 - Docker/docker-compose installed
 - Rename .env.example file to .env
