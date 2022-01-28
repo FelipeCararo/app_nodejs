@@ -32,7 +32,6 @@ jobs:
 
   test-docker-compose:
     runs-on: ubuntu-20.04
-    environment: dev
     steps:
       - uses: actions/checkout@v2
       - name: Build the stack
