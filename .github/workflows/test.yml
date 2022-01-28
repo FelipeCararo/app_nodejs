@@ -24,6 +24,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn
       - run: yarn test
+        env:
+          CI: true
+          TESTE_SECRET: ${{ secrets.TESTE_SECRET }}
+      - name: Print secret test
+        run: |
+        echo "This is a secret value: $TESTE_SECRET"
   test-docker-compose:
     runs-on: ubuntu-20.04
 
@@ -31,5 +37,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the stack
         run: docker-compose up -d
-      - name: Test docker-compose
+      - name: Test
         run: docker run --network container:app appropriate/curl -s --retry 10 --retry-connrefused http://app:3000/
