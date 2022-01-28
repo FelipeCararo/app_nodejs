@@ -35,6 +35,7 @@ jobs:
           APP_SECRET: ${{ secrets.APP_SECRET }}
           DB_DIALECT: ${{ secrets.DB_DIALECT }}
           SECRET_DEV_TESTE: ${{ secrets.dev.SECRET_DEV_TESTE }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
   test-docker-compose:
     runs-on: ubuntu-20.04
 
