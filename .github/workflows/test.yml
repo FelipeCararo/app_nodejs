@@ -26,6 +26,7 @@ jobs:
       - run: yarn test
         env:
           CI: true
+          APP_SECRET: ${{ secrets.APP_SECRET }}
           DB_DIALECT: ${{ secrets.DB_DIALECT }}
   test-docker-compose:
     runs-on: ubuntu-20.04
