@@ -23,6 +23,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn
+        env:
+          CI: true
+          APP_SECRET: ${{ secrets.APP_SECRET }}
+          DB_DIALECT: ${{ secrets.DB_DIALECT }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
       - run: yarn test
       - name: Print secret test
         run: |
@@ -30,11 +35,7 @@ jobs:
           then
             echo "Secret Ok"
           fi
-        env:
-          CI: true
-          APP_SECRET: ${{ secrets.APP_SECRET }}
-          DB_DIALECT: ${{ secrets.DB_DIALECT }}
-          NODE_ENV: ${{ secrets.NODE_ENV }}
+
   test-docker-compose:
     runs-on: ubuntu-20.04
 
